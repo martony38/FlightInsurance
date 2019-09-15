@@ -1,0 +1,23 @@
+{
+  "name": "smart-contracts",
+  "version": "1.0.0",
+  "description": "smart contracts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test ./test/flightSurety.js",
+    "prettier": "prettier --write contracts/*.sol"
+  },
+  "author": "Laurent Sehabiague <martony@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.3.0"
+  },
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^1.0.18",
+    "bignumber.js": "^9.0.0",
+    "prettier": "^1.18.2",
+    "prettier-plugin-solidity": "^1.0.0-alpha.32"
+  }
+}

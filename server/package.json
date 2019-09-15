@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "oracles server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rm -rf ./build/server && webpack --config webpack.config.server.js"
+  },
+  "author": "Laurent Sehabiague <martony@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "babel-loader": "^8.0.6",
+    "start-server-webpack-plugin": "^2.2.5",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.8",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "web3": "^1.2.1"
+  }
+}
