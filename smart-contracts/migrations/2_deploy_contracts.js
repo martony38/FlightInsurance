@@ -14,12 +14,12 @@ module.exports = function(deployer) {
         }
       };
       fs.writeFileSync(
-        __dirname + "/../src/dapp/config.json",
+        __dirname + "/../../frontend/config.json",
         JSON.stringify(config, null, "\t"),
         "utf-8"
       );
       fs.writeFileSync(
-        __dirname + "/../src/server/config.json",
+        __dirname + "/../../server/config.json",
         JSON.stringify(config, null, "\t"),
         "utf-8"
       );
