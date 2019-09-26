@@ -1,125 +1,188 @@
 pragma solidity >=0.4.21 <0.6.0;
+//pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "./AirlineData.sol";
 
-contract FlightSuretyData {
+contract FlightSuretyData is AirlineData {
     using SafeMath for uint256;
 
-    /********************************************************************************************/
-    /*                                       DATA VARIABLES                                     */
-    /********************************************************************************************/
-
-    address private contractOwner; // Account used to deploy contract
-    bool private operational = true; // Blocks all state changes throughout the contract if false
-
-    /********************************************************************************************/
-    /*                                       EVENT DEFINITIONS                                  */
-    /********************************************************************************************/
-
-    /**
-    * @dev Constructor
-    *      The deploying account becomes contractOwner
-    */
-    constructor() public {
-        contractOwner = msg.sender;
+    /*************************************************************************/
+    /*                            DATA VARIABLES                             */
+    /*************************************************************************/
+    struct Flight {
+        bool isRegistered;
+        uint8 statusCode;
+        uint256 updatedTimestamp;
+        address airline;
     }
+    mapping(bytes32 => Flight) private flights;
 
-    /********************************************************************************************/
-    /*                                       FUNCTION MODIFIERS                                 */
-    /********************************************************************************************/
-
-    // Modifiers help avoid duplication of code. They are typically used to validate something
-    // before a function is allowed to be executed.
-
-    /**
-    * @dev Modifier that requires the "operational" boolean variable to be "true"
-    *      This is used on all state changing functions to pause the contract in
-    *      the event there is an issue that needs to be fixed
-    */
-    modifier requireIsOperational() {
-        require(operational, "Contract is currently not operational");
-        _; // All modifiers require an "_" which indicates where the function body will be added
+    struct Insurance {
+        bool isPaid;
+        uint256 deposit;
+        // rate is in percentage (e.g. 150 for X1.5)
+        uint256 rate;
     }
-
-    /**
-    * @dev Modifier that requires the "ContractOwner" account to be the function caller
-    */
-    modifier requireContractOwner() {
-        require(msg.sender == contractOwner, "Caller is not contract owner");
-        _;
+    struct Passenger {
+        mapping(bytes32 => Insurance) insurances;
+        bytes32[] flights;
+        uint256 balance;
     }
+    mapping(address => Passenger) private passengers;
 
-    /********************************************************************************************/
-    /*                                       UTILITY FUNCTIONS                                  */
-    /********************************************************************************************/
+    /*************************************************************************/
+    /*                              CONSTRUCTOR                              */
+    /*************************************************************************/
+    constructor(uint8 pausers) public AirlineData(pausers) {}
 
+    /*************************************************************************/
+    /*                       SMART CONTRACT FUNCTIONS                        */
+    /*************************************************************************/
     /**
-    * @dev Get operating status of contract
-    *
-    * @return A bool that is the current operating status
+    * @dev Register a future flight for insuring.
     */
-    function isOperational() public view returns (bool) {
-        return operational;
+    function registerFlight(
+        bytes32 key,
+        address airline,
+        uint256 timestamp,
+        uint8 statusCode
+    ) external whenNotPaused onlyAuthorizedContract {
+        flights[key] = Flight({
+            isRegistered: true,
+            statusCode: statusCode,
+            updatedTimestamp: timestamp,
+            airline: airline
+        });
     }
 
     /**
-    * @dev Sets contract operations on/off
-    *
-    * When operational mode is disabled, all write transactions except for this one will fail
+    * @dev Get flight info
     */
-    function setOperatingStatus(bool mode) external requireContractOwner {
-        operational = mode;
+    //function getFlight(bytes32 key)
+    //    external
+    //    view
+    //    whenNotPaused
+    //    onlyAuthorizedContract
+    //    returns (bool, uint8, uint256, address)
+    ////Flight memory
+    //{
+    //    return flights[key]; // (flights[key].isRegistered, flights[key].statusCode, flights[key].updatedTimestamp, flights[key].airline);
+    //}
+
+    function isFlightRegistered(bytes32 key)
+        external
+        view
+        whenNotPaused
+        onlyAuthorizedContract
+        returns (bool)
+    {
+        return flights[key].isRegistered;
     }
 
-    /********************************************************************************************/
-    /*                                     SMART CONTRACT FUNCTIONS                             */
-    /********************************************************************************************/
+    function getStatus(bytes32 key)
+        external
+        view
+        whenNotPaused
+        onlyAuthorizedContract
+        returns (uint8)
+    {
+        return flights[key].statusCode;
+    }
 
     /**
-    * @dev Add an airline to the registration queue
-    *      Can only be called from FlightSuretyApp contract
-    *
+    * @dev Update flight status
     */
-    function registerAirline() external pure {}
+    function updateFlightStatus(
+        bytes32 key,
+        uint8 statusCode,
+        uint256 timestamp
+    ) external whenNotPaused onlyAuthorizedContract {
+        flights[key].statusCode = statusCode;
+        flights[key].updatedTimestamp = timestamp;
+    }
 
     /**
     * @dev Buy insurance for a flight
-    *
     */
-    function buy() external payable {}
-
-    /**
-     *  @dev Credits payouts to insurees
-    */
-    function creditInsurees() external pure {}
-
-    /**
-     *  @dev Transfers eligible payout funds to insuree
-     *
-    */
-    function pay() external pure {}
-
-    /**
-    * @dev Initial funding for the insurance. Unless there are too many delayed flights
-    *      resulting in insurance payouts, the contract should be self-sustaining
-    *
-    */
-    function fund() public payable {}
-
-    function getFlightKey(
-        address airline,
-        string memory flight,
-        uint256 timestamp
-    ) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked(airline, flight, timestamp));
+    function buy(
+        address passenger,
+        bytes32 flightKey,
+        uint256 amount,
+        uint256 rate
+    ) external payable whenNotPaused onlyAuthorizedContract {
+        Insurance memory insurance = Insurance({
+            isPaid: false,
+            deposit: amount,
+            rate: rate
+        });
+        passengers[passenger].insurances[flightKey] = insurance;
     }
 
     /**
-    * @dev Fallback function for funding smart contract.
-    *
+    * @dev Returns the balance of a passenger
     */
-    function() external payable {
-        fund();
+    function checkBalance(address passenger)
+        external
+        view
+        whenNotPaused
+        onlyAuthorizedContract
+        returns (uint256)
+    {
+        return passengers[passenger].balance;
     }
 
+    //function getInsurance(address passenger, bytes32 flightKey)
+    //    external
+    //    view
+    //    whenNotPaused
+    //    onlyAuthorizedContract
+    //    returns (Insurance memory)
+    //{
+    //    return passengers[passenger].insurances[flightKey];
+    //}
+
+    /**
+    * @dev Credits payouts to insuree
+    */
+    function creditInsuree(bytes32 flightKey, address passenger)
+        external
+        whenNotPaused
+        onlyAuthorizedContract
+    {
+        require(
+            passengers[passenger].insurances[flightKey].deposit > 0,
+            "Passenger did not purchase insurance for this flight"
+        );
+        require(
+            !passengers[passenger].insurances[flightKey].isPaid,
+            "Insuree already credited"
+        );
+
+        passengers[passenger].insurances[flightKey].isPaid = true;
+        uint256 deposit = passengers[passenger].insurances[flightKey].deposit;
+        uint256 rate = passengers[passenger].insurances[flightKey].rate;
+        uint256 balance = passengers[passenger].balance;
+        passengers[passenger].balance = balance.add(deposit.mul(rate).div(100));
+    }
+
+    /**
+    * @dev Transfers balance funds to insuree
+    */
+    function pay(address payable passenger)
+        external
+        whenNotPaused
+        onlyAuthorizedContract
+    //nonReentrant
+    {
+        require(
+            passengers[passenger].balance > 0,
+            "Passenger does not have any credit"
+        );
+
+        uint256 balance = passengers[passenger].balance;
+        passengers[passenger].balance = 0;
+        passenger.transfer(balance);
+    }
 }

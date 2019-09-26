@@ -1,6 +1,6 @@
 const FlightSuretyApp = artifacts.require("FlightSuretyApp");
 const FlightSuretyData = artifacts.require("FlightSuretyData");
-const BigNumber = require("bignumber.js");
+//const BigNumber = require("bignumber.js");
 
 const Config = async function(accounts) {
   // These test addresses are useful when you need to add
@@ -20,13 +20,16 @@ const Config = async function(accounts) {
   const owner = accounts[0];
   const firstAirline = accounts[1];
 
-  const flightSuretyData = await FlightSuretyData.new();
-  const flightSuretyApp = await FlightSuretyApp.new();
+  const flightSuretyData = await FlightSuretyData.new(1);
+  const flightSuretyApp = await FlightSuretyApp.new(
+    flightSuretyData.address,
+    1
+  );
 
   return {
     owner,
     firstAirline,
-    weiMultiple: new BigNumber(10).pow(18),
+    //weiMultiple: new BigNumber(10).pow(18),
     testAddresses,
     flightSuretyData,
     flightSuretyApp
