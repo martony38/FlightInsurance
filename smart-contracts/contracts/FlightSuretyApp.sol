@@ -74,7 +74,7 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
     // Oracles track this and if they have a matching index
     // they fetch data and submit a response
     event OracleRequest(
-        uint8 index,
+        uint8 indexed index,
         address airline,
         string flight,
         uint256 timestamp
