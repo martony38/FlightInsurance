@@ -36,8 +36,14 @@ contract FlightSuretyData is AirlineData {
     /*                           EVENT DEFINITIONS                           */
     /*************************************************************************/
     event FlightRegistered(bytes32 indexed key);
-    event InsurancePurchased(address indexed passenger, bytes32 indexed flightKey);
-    event InsuranceClaimed(address indexed passenger, bytes32 indexed flightKey);
+    event InsurancePurchased(
+        address indexed passenger,
+        bytes32 indexed flightKey
+    );
+    event InsuranceClaimed(
+        address indexed passenger,
+        bytes32 indexed flightKey
+    );
     event BalanceWithdrawn(address indexed passenger);
 
     /*************************************************************************/

@@ -185,12 +185,16 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
     /**
     * @dev Register a future flight for insuring.
     */
-    function registerFlight(
-        string calldata flight,
-        uint256 timestamp
-    ) external whenNotPaused onlyAirline {
+    function registerFlight(string calldata flight, uint256 timestamp)
+        external
+        whenNotPaused
+        onlyAirline
+    {
         bytes32 key = _getFlightKey(msg.sender, flight, timestamp);
-        require(!flightSuretyData.isFlightRegistered(key), "Flight is already registered");
+        require(
+            !flightSuretyData.isFlightRegistered(key),
+            "Flight is already registered"
+        );
         address airline = msg.sender;
         flightSuretyData.registerFlight(
             key,
@@ -212,7 +216,10 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
             msg.value <= 1 ether,
             "Maximum insurance purchase amount is 1 ether"
         );
-        require(flightSuretyData.isFlightRegistered(key), "Flight is not registered");
+        require(
+            flightSuretyData.isFlightRegistered(key),
+            "Flight is not registered"
+        );
 
         _dataContract.transfer(msg.value);
         flightSuretyData.buy(msg.sender, key, msg.value, 150);
@@ -331,7 +338,13 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
             oracleResponses[key].responses[statusCode].length >= MIN_RESPONSES
         ) {
             bytes32 flightKey = _getFlightKey(airline, flight, timestamp);
-            emit FlightStatusInfo(flightKey, airline, flight, timestamp, statusCode);
+            emit FlightStatusInfo(
+                flightKey,
+                airline,
+                flight,
+                timestamp,
+                statusCode
+            );
 
             oracleResponses[key].isOpen = false;
 
