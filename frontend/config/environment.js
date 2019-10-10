@@ -53,6 +53,9 @@ module.exports = function(environment) {
 
   if (environment === "production") {
     // here you can enable a production-specific feature
+
+    // App is not going to real production
+    ENV.APP.network = networks.development;
   }
 
   return ENV;

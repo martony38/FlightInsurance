@@ -1,11 +1,11 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "flight insurance frontend",
+  "version": "1.0.0",
   "private": true,
-  "description": "Small description for frontend goes here",
+  "description": "Flight Insurance 3.0",
   "repository": "",
   "license": "MIT",
-  "author": "",
+  "author": "Laurent Sehabiague <martony@gmail.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -14,7 +14,7 @@
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
-    "start": "ember serve",
+    "start": "ember serve --prod",
     "test": "ember test"
   },
   "devDependencies": {
