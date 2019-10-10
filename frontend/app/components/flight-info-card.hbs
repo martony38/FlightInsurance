@@ -1,0 +1,17 @@
+<div
+  class={{if @flightInfo.isClaimable "info-card clickable" "info-card"}}
+  {{on 'click' (fn @claim  (if @flightInfo.isClaimable @flightInfo null))}}
+>
+  <div class="info-card-section">
+    <label>Flight Number</label>
+    <div>{{@flightInfo.flight}}</div>
+  </div>
+  <div class="info-card-section">
+    <label>Status</label>
+    <div>{{get-status @flightInfo.status}}</div>
+  </div>
+  <div class="info-card-section">
+    <label>Last Update</label>
+    <div>{{date-format @flightInfo.timestamp "HH:mm"}}</div>
+  </div>
+</div>

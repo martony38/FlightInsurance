@@ -26,12 +26,12 @@ contract MultiPartyPausable is Context, PauserRole {
     /**
      * @dev Emitted when the pause is triggered by a pauser (`account`).
      */
-    event Paused(address account);
+    event Paused(address indexed account);
 
     /**
      * @dev Emitted when the pause is lifted by a pauser (`account`).
      */
-    event Unpaused(address account);
+    event Unpaused(address indexed account);
 
     /*************************************************************************/
     /*                              CONSTRUCTOR                              */

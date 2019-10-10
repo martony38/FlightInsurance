@@ -55,14 +55,23 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
     // Key = hash(index, airline, flight, timestamp)
     mapping(bytes32 => ResponseInfo) private oracleResponses;
 
-    // Event fired each time an oracle submits a response
+    FlightSuretyData flightSuretyData;
+
+    address payable private _dataContract;
+
+    /*************************************************************************/
+    /*                           EVENT DEFINITIONS                           */
+    /*************************************************************************/
+    // Event fired once enough oracles have submitted the same response
     event FlightStatusInfo(
+        bytes32 indexed flightKey,
         address airline,
         string flight,
         uint256 timestamp,
         uint8 status
     );
 
+    // Event fired each time an oracle submits a response
     event OracleReport(
         address airline,
         string flight,
@@ -79,14 +88,6 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
         string flight,
         uint256 timestamp
     );
-
-    FlightSuretyData flightSuretyData;
-
-    address payable private _dataContract;
-
-    /*************************************************************************/
-    /*                           EVENT DEFINITIONS                           */
-    /*************************************************************************/
 
     /*************************************************************************/
     /*                              CONSTRUCTOR                              */
@@ -185,11 +186,11 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
     * @dev Register a future flight for insuring.
     */
     function registerFlight(
-        //address airline,
         string calldata flight,
         uint256 timestamp
     ) external whenNotPaused onlyAirline {
         bytes32 key = _getFlightKey(msg.sender, flight, timestamp);
+        require(!flightSuretyData.isFlightRegistered(key), "Flight is already registered");
         address airline = msg.sender;
         flightSuretyData.registerFlight(
             key,
@@ -329,7 +330,10 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
         if (
             oracleResponses[key].responses[statusCode].length >= MIN_RESPONSES
         ) {
-            emit FlightStatusInfo(airline, flight, timestamp, statusCode);
+            bytes32 flightKey = _getFlightKey(airline, flight, timestamp);
+            emit FlightStatusInfo(flightKey, airline, flight, timestamp, statusCode);
+
+            oracleResponses[key].isOpen = false;
 
             // Handle flight status as appropriate
             _processFlightStatus(airline, flight, timestamp, statusCode);

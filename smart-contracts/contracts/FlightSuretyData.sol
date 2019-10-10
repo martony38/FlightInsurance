@@ -33,6 +33,14 @@ contract FlightSuretyData is AirlineData {
     mapping(address => Passenger) private passengers;
 
     /*************************************************************************/
+    /*                           EVENT DEFINITIONS                           */
+    /*************************************************************************/
+    event FlightRegistered(bytes32 indexed key);
+    event InsurancePurchased(address indexed passenger, bytes32 indexed flightKey);
+    event InsuranceClaimed(address indexed passenger, bytes32 indexed flightKey);
+    event BalanceWithdrawn(address indexed passenger);
+
+    /*************************************************************************/
     /*                              CONSTRUCTOR                              */
     /*************************************************************************/
     constructor(uint8 pausers) public AirlineData(pausers) {}
@@ -55,21 +63,8 @@ contract FlightSuretyData is AirlineData {
             updatedTimestamp: timestamp,
             airline: airline
         });
+        emit FlightRegistered(key);
     }
-
-    /**
-    * @dev Get flight info
-    */
-    //function getFlight(bytes32 key)
-    //    external
-    //    view
-    //    whenNotPaused
-    //    onlyAuthorizedContract
-    //    returns (bool, uint8, uint256, address)
-    ////Flight memory
-    //{
-    //    return flights[key]; // (flights[key].isRegistered, flights[key].statusCode, flights[key].updatedTimestamp, flights[key].airline);
-    //}
 
     function isFlightRegistered(bytes32 key)
         external
@@ -118,6 +113,7 @@ contract FlightSuretyData is AirlineData {
             rate: rate
         });
         passengers[passenger].insurances[flightKey] = insurance;
+        emit InsurancePurchased(passenger, flightKey);
     }
 
     /**
@@ -132,16 +128,6 @@ contract FlightSuretyData is AirlineData {
     {
         return passengers[passenger].balance;
     }
-
-    //function getInsurance(address passenger, bytes32 flightKey)
-    //    external
-    //    view
-    //    whenNotPaused
-    //    onlyAuthorizedContract
-    //    returns (Insurance memory)
-    //{
-    //    return passengers[passenger].insurances[flightKey];
-    //}
 
     /**
     * @dev Credits payouts to insuree
@@ -165,6 +151,7 @@ contract FlightSuretyData is AirlineData {
         uint256 rate = passengers[passenger].insurances[flightKey].rate;
         uint256 balance = passengers[passenger].balance;
         passengers[passenger].balance = balance.add(deposit.mul(rate).div(100));
+        emit InsuranceClaimed(passenger, flightKey);
     }
 
     /**
@@ -184,5 +171,6 @@ contract FlightSuretyData is AirlineData {
         uint256 balance = passengers[passenger].balance;
         passengers[passenger].balance = 0;
         passenger.transfer(balance);
+        emit BalanceWithdrawn(passenger);
     }
 }

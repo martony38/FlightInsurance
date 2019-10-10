@@ -1,0 +1,17 @@
+<div class="flight-selection">
+  <h2>Add New Airline</h2>
+  <div class="flight-selection-section">
+    <label>Choose an airline:</label>
+    <select onchange={{action this.selectAirline value="target.value"}}>
+      <option value=''>Select designator</option>
+      {{#each @airlines as |airline|}}
+        <option value={{airline.designator}}>{{airline.designator}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <button
+    class="flight-selection-section fetch-btn"
+    {{on "click" (fn this.addAirline this.selectedAirline)}}
+    disabled={{this.isAddAirlineBtnDisabled}}
+  >Add Airline</button>
+</div>

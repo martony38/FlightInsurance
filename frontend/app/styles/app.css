@@ -1,0 +1,199 @@
+body {
+  background: #6bbced;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  display: flex;
+  /*margin: 3em 5em;*/
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 992px) {
+  main {
+    margin: 3em 5em;
+  }
+}
+
+select {
+  box-shadow: 0px 2px 3px 0px #26657d;
+  height: 2em;
+  border: none;
+  background: #3994b7;
+  color: white;
+  width: 150px;
+}
+
+/* Hide HTML5 Up and Down arrows. Taken from:
+/ https://www.thatstevensguy.com/programming/disable-arrows-on-number-inputs/
+*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 1em;
+  padding-right: 0;
+}
+
+input[type="number"]:focus {
+  outline: none;
+}
+
+input[type="number"] + label {
+  color: white;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #47a3d1;
+  align-items: center;
+  width: 100%;
+}
+
+label {
+  margin-right: 0.5em;
+}
+
+button {
+  cursor: pointer;
+  background: white;
+  box-shadow: 1px 3px 6px 0px #5d92b9;
+  border: none;
+  font-size: 1em;
+  border-radius: 4px;
+  padding: 0.75em 2em;
+}
+
+button[disabled] {
+  cursor: default;
+  background: #cde0fd;
+}
+
+button.link {
+  margin: 2em;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2em 0;
+}
+
+.title {
+  color: white;
+  text-align: right;
+}
+
+.logo {
+  background-image: url("/assets/plane.png");
+  background-position: center;
+  background-size: cover;
+  height: 87px;
+  width: 250px;
+  position: relative;
+  top: 1px;
+}
+
+.flight-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 3px 0px #44a0d8;
+  padding: 0 0 1em;
+  margin: 1em 0;
+  flex-direction: column;
+  width: 100%;
+}
+
+.passenger-selection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flight-selection-section {
+  margin: 1em;
+}
+
+.fetch-btn {
+  /*margin-right: 0;*/
+}
+
+.flight-info-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1em 0;
+}
+
+.flight-status {
+  box-shadow: 0px 2px 3px 0px #44a0d8;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-card {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.5em;
+  box-shadow: 1px 3px 6px 0px #5d92b9;
+  padding: 1em;
+  min-width: 300px;
+  background: white;
+}
+
+.info-card.clickable {
+  cursor: pointer;
+  background: #fafd9a;
+}
+.info-card.clickable .info-card-section label {
+  cursor: pointer;
+}
+
+.info-card-section {
+  /*margin: 0 1em;*/
+}
+
+.info-card-section label {
+  font-size: 0.7em;
+  font-style: italic;
+  color: gray;
+  margin-right: 0;
+}
+
+footer {
+  font-size: 0.5em;
+  margin: 20em 0 1em;
+}
+
+.ember-notify-default .ember-notify {
+  box-shadow: 1px 3px 6px 0px #5d92b9;
+  border: none;
+}
+
+.success {
+  background: #b9efb9;
+}
+
+.error {
+  background: #d69b9b;
+}
+
+.info {
+  background: #fbfbbe;
+}

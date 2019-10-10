@@ -34,6 +34,7 @@ contract AirlineData is Context, Ownable, MultiPartyPausable {
     /*************************************************************************/
     event AirlineAdded(address indexed account);
     event AirlineRemoved(address indexed account);
+    event VoteReceived(address indexed voter, address airline);
 
     /*************************************************************************/
     /*                              CONSTRUCTOR                              */
@@ -107,6 +108,7 @@ contract AirlineData is Context, Ownable, MultiPartyPausable {
         onlyAuthorizedContract
     {
         _votes[airline].push(voter);
+        emit VoteReceived(voter, airline);
     }
 
     function deleteAirlineVotes(address airline)

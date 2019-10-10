@@ -137,20 +137,12 @@ contract AirlineApp is Context, MultiPartyPausable {
 
 contract AirlineData {
     uint256 public airlinesCount;
-
     function isAirline(address) public view returns (bool);
-
     function addAirline(address) external;
-
     function voteForAirline(address, address) external;
-
     function deleteAirlineVotes(address) external;
-
     function getVotes(address) external returns (address[] memory);
-
     function registerAirline(address) external;
-
     function isRegistered(address) external view returns (bool);
-
     function deleteAirlineRegistration(address) external;
 }

@@ -1,0 +1,18 @@
+<div class="flight-selection">
+  {{#if this.contract.ready}}
+    {{#link-to "passenger"}}
+      <button class="link">Check Flights Status / Buy Insurance</button>
+    {{/link-to}}
+    {{#link-to "airline"}}
+      <button class="link">Restricted Airline Only Area</button>
+    {{/link-to}}
+    {{#link-to "owner"}}
+      <button class="link">Contract Owner Only</button>
+    {{/link-to}}
+    {{#link-to "pauser"}}
+      <button class="link">Contract Admins Only</button>
+    {{/link-to}}
+  {{else}}
+    Fetching contract data from blockchain... please wait.
+  {{/if}}
+</div>

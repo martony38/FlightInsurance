@@ -1,0 +1,22 @@
+<OperationalStatus @admin={{this.contract.owner}}//>
+<AddAirlineDashboard @airlines={{@airlines}} @airline={{this.contract.owner}}/>
+<div class="flight-selection">
+  <h2>Add New Admin</h2>
+  <div class="flight-selection-section">
+    <label>Choose an admin:</label>
+    <select onchange={{action (mut this.selectedAdmin) value="target.value"}}>
+      <option value=''>Select address</option>
+      {{#each @admins as |admin|}}
+        <option value={{admin}}>{{admin}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <button
+    class="flight-selection-section fetch-btn"
+    {{on "click" this.addAppAdmin}}
+  >Add App Admin</button>
+  <button
+    class="flight-selection-section fetch-btn"
+    {{on "click" this.addDataAdmin}}
+  >Add Data Admin</button>
+</div>

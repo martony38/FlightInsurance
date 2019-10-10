@@ -1,6 +1,15 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
 
-{{outlet}}
-
+<EmberNotify/>
+<main>
+  <header>
+    <div class="logo"></div>
+    {{#link-to "index"}}
+      <h1 class="title">Flight Insurance 3.0</h1>
+    {{/link-to}}
+  </header>
+  {{outlet}}
+  <footer>
+    <a href="https://www.vecteezy.com/free-vector/character">Character Vectors by Vecteezy</a>
+    <a href="https://www.freevector.com/cartoon-plane-vector-19573">FreeVector.com</a>
+  </footer>
+</main>

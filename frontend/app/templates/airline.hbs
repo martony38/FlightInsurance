@@ -1,0 +1,10 @@
+{{#if this.contract.ready}}
+  <AirlineDashboard
+    @airlines={{this.model.airlines}}
+    @flights={{this.model.flights}}
+  />
+{{else}}
+  <div class="flight-selection">
+    Fetching contract data from blockchain... please wait.
+  </div>
+{{/if}}

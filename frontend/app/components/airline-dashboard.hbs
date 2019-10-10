@@ -1,0 +1,54 @@
+<div class="flight-selection">
+  <h2>Airline Selection</h2>
+  <div class="flight-selection-section">
+    <label>Choose an airline to impersonate:</label>
+    <select onchange={{action this.selectAirline value="target.value"}}>
+      <option value=''>Select designator</option>
+      {{#each @airlines as |airline|}}
+        <option value={{airline.designator}}>{{airline.designator}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+<div class="flight-selection">
+  <h2>Register Flight For Insurance</h2>
+  <div class="flight-selection-section">
+    <label>Choose a flight:</label>
+    <select
+      disabled={{this.isFetching}}
+      onchange={{action (mut this.selectedFlightNumber) value="target.value"}}
+    >
+      <option value=''>Select flight number</option>
+      {{#each this.filteredFlights as |flight|}}
+        <option value={{flight.number}}>{{flight.number}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <button
+    class="flight-selection-section fetch-btn"
+    {{on "click" this.registerFlight}}
+    disabled={{this.isRegisterBtnDisabled}}
+  >Register Flight</button>
+</div>
+<AddAirlineDashboard @airlines={{@airlines}} @airline={{this.selectedAirline}}/>
+<div class="flight-selection">
+  <h2>Fund Registration</h2>
+  <div class="flight-selection-section">
+    <label>Registration Amount:</label>
+    <input
+      placeholder="10"
+      type='number'
+      min='10'
+      max='100'
+      step='0.1'
+      value={{this.amount}}
+      onchange={{action (mut this.amount) value="target.value"}}
+    >
+    <label>Ether</label>
+  </div>
+  <button
+    class="flight-selection-section fetch-btn"
+    {{on "click" (fn this.fundRegistration)}}
+    disabled={{this.isFundBtnDisabled}}
+  >Pay Registration Fee</button>
+</div>
