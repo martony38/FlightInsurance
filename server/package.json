@@ -4,7 +4,7 @@
   "description": "oracles server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rm -rf ./build/server && webpack --config webpack.config.server.js"
+    "server": "rm -rf ./build/server && webpack --config webpack.config.server.js"
   },
   "author": "Laurent Sehabiague <martony@gmail.com>",
   "license": "MIT",

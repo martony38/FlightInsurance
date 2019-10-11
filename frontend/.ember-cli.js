@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const { setEdition } = require('@ember/edition-utils');
+const { setEdition } = require("@ember/edition-utils");
 
-setEdition('octane');
+setEdition("octane");
 
 module.exports = {
   /**
@@ -11,5 +11,6 @@ module.exports = {
 
     Setting `disableAnalytics` to true will prevent any data from being sent.
   */
-  "disableAnalytics": false
-}
+  disableAnalytics: false,
+  port: 8000
+};

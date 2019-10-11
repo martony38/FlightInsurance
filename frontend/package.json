@@ -1,5 +1,5 @@
 {
-  "name": "flight insurance frontend",
+  "name": "frontend",
   "version": "1.0.0",
   "private": true,
   "description": "Flight Insurance 3.0",
@@ -12,9 +12,10 @@
   },
   "scripts": {
     "build": "ember build",
+    "dapp": "ember serve --prod",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
-    "start": "ember serve --prod",
+    "start": "ember serve",
     "test": "ember test"
   },
   "devDependencies": {
