@@ -14,4 +14,7 @@
     <label>Last Update</label>
     <div>{{date-format @flightInfo.timestamp "HH:mm"}}</div>
   </div>
+  {{#if @flightInfo.isClaimable}}
+    <div class="claim-label">click to claim</div>
+  {{/if}}
 </div>

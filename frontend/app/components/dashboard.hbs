@@ -1,6 +1,6 @@
-<div class="flight-selection">
+<div class="panel">
   <h2>Passenger Selection</h2>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Choose a passenger to impersonate:</label>
     <select onchange={{action (mut this.selectedPassenger) value="target.value"}}>
       <option value=''>Select address</option>
@@ -10,10 +10,31 @@
     </select>
   </div>
 </div>
-
-<div class="flight-selection">
+{{#if this.flightStatuses.length}}
+  <div class="flight-status">
+    <h2>Flights Status</h2>
+    {{#if this.isFetching}}
+      <div class="message">
+        {{#if this.statusFetchFailed}}
+          <div>Could not get a flight status update from oracles. Please try again.</div>
+        {{else}}
+          <div>Waiting for flight status update from oracles... Please wait.</div>
+        {{/if}}
+      </div>
+    {{/if}}
+    <div class="flight-info-list">
+      {{#each this.flightStatuses as |info|}}
+        <FlightInfoCard
+          @flightInfo={{info}}
+          @claim={{action this.claim}}
+        />
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+<div class="panel">
   <h2>Flight Selection</h2>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Filter by airline:</label>
     <select onchange={{action this.selectAirline value="target.value"}}>
       <option value=''>Select designator</option>
@@ -22,7 +43,7 @@
       {{/each}}
     </select>
   </div>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Choose a flight:</label>
     <select
       disabled={{this.isFetching}}
@@ -35,14 +56,14 @@
     </select>
   </div>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" (fn this.fetchFlightStatus this.selectedFlight)}}
     disabled={{this.isFetchBtnDisabled}}
   >Fetch Flight Status</button>
 </div>
-<div class="flight-selection">
+<div class="panel">
   <h2>Insurance</h2>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Insurance Amount:</label>
     <input
       placeholder="0.1"
@@ -56,34 +77,15 @@
     <label>Ether</label>
   </div>
   <button
-    class="flight-selection-section"
+    class="panel-section"
     {{on "click" (fn this.purchaseInsurance this.selectedFlight)}}
     disabled={{this.isBuyBtnDisabled}}
   >Purchase Insurance</button>
     <button
-    class="flight-selection-section"
+    class="panel-section"
     {{on "click" this.withdraw}}
     disabled={{this.isWithdrawBtnDisabled}}
   >Withdraw Balance</button>
 </div>
-<section class="flight-status">
-  <h2>Flights Status</h2>
-  {{#if this.isFetching}}
-  <div class="message">
-    {{#if this.statusFetchFailed}}
-      <div>Could not get a flight status update from oracles. Please try again.</div>
-    {{else}}
-      <div>Waiting for flight status update from oracles... Please wait.</div>
-    {{/if}}
-  </div>
-{{/if}}
-<div class="flight-info-list">
-  {{#each this.flightStatuses as |info|}}
-    <FlightInfoCard
-      @flightInfo={{info}}
-      @claim={{action this.claim}}
-    />
-  {{/each}}
-</div>
-</section>
+
 

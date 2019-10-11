@@ -1,4 +1,4 @@
-<div class="flight-selection">
+<div class="panel">
   <h2>App Contract Status:
     {{#if appContractPaused}}
       Paused
@@ -14,25 +14,25 @@
     {{/if}}
   </h2>
 </div>
-<div class="flight-selection">
+<div class="panel">
   <h2>Toggle App Contract Operational Status</h2>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" this.pauseAppContract}}
   >Pause App Contract</button>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" this.unpauseAppContract}}
   >Unpause App Contract</button>
 </div>
-<div class="flight-selection">
+<div class="panel">
   <h2>Toggle App Contract Operational Status</h2>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" this.pauseDataContract}}
   >Pause Data Contract</button>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" this.unpauseDataContract}}
   >Unpause Data Contract</button>
 </div>

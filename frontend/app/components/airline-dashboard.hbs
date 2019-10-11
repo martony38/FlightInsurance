@@ -1,6 +1,6 @@
-<div class="flight-selection">
+<div class="panel">
   <h2>Airline Selection</h2>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Choose an airline to impersonate:</label>
     <select onchange={{action this.selectAirline value="target.value"}}>
       <option value=''>Select designator</option>
@@ -10,9 +10,9 @@
     </select>
   </div>
 </div>
-<div class="flight-selection">
+<div class="panel">
   <h2>Register Flight For Insurance</h2>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Choose a flight:</label>
     <select
       disabled={{this.isFetching}}
@@ -25,15 +25,15 @@
     </select>
   </div>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" this.registerFlight}}
     disabled={{this.isRegisterBtnDisabled}}
   >Register Flight</button>
 </div>
 <AddAirlineDashboard @airlines={{@airlines}} @airline={{this.selectedAirline}}/>
-<div class="flight-selection">
+<div class="panel">
   <h2>Fund Registration</h2>
-  <div class="flight-selection-section">
+  <div class="panel-section">
     <label>Registration Amount:</label>
     <input
       placeholder="10"
@@ -47,7 +47,7 @@
     <label>Ether</label>
   </div>
   <button
-    class="flight-selection-section fetch-btn"
+    class="panel-section fetch-btn"
     {{on "click" (fn this.fundRegistration)}}
     disabled={{this.isFundBtnDisabled}}
   >Pay Registration Fee</button>
