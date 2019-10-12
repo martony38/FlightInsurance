@@ -81,7 +81,19 @@
     {{on "click" (fn this.purchaseInsurance this.selectedFlight)}}
     disabled={{this.isBuyBtnDisabled}}
   >Purchase Insurance</button>
-    <button
+  {{#if this.balance}}
+    <div class="panel-section">
+      <label>Current balance:</label>
+      <label class="white">{{this.balance}}</label>
+      <label class="white">Ether</label>
+    </div>
+  {{/if}}
+  <button
+    class="panel-section"
+    {{on "click" this.checkBalance}}
+    disabled={{this.isWithdrawBtnDisabled}}
+  >Check Balance</button>
+  <button
     class="panel-section"
     {{on "click" this.withdraw}}
     disabled={{this.isWithdrawBtnDisabled}}

@@ -7,7 +7,7 @@
     <select onchange={{action (mut this.selectedAdmin) value="target.value"}}>
       <option value=''>Select address</option>
       {{#each @admins as |admin|}}
-        <option value={{admin}}>{{admin}}</option>
+        <option value={{admin}}>{{truncate-text admin limit=12}}</option>
       {{/each}}
     </select>
   </div>

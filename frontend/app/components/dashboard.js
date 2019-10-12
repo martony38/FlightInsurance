@@ -11,6 +11,7 @@ export default class DashboardComponent extends Component {
   @tracked isFetching = false;
   @tracked statusFetchFailed = false;
   @tracked amount = 0.1;
+  @tracked balance = null;
 
   @service contract;
   @service notify;
@@ -228,6 +229,21 @@ export default class DashboardComponent extends Component {
 
     try {
       await contract.withdraw(selectedPassenger);
+    } catch (error) {
+      console.log(error);
+      this.notify.error(`Transaction could not complete: ${error.message}`);
+    }
+  }
+
+  @action
+  async checkBalance() {
+    const { contract, selectedPassenger } = this;
+
+    this.notify.info("Checking balance... Please wait.");
+
+    try {
+      const balance = await contract.checkBalance(selectedPassenger);
+      this.balance = contract.web3.utils.fromWei(balance);
     } catch (error) {
       console.log(error);
       this.notify.error(`Transaction could not complete: ${error.message}`);

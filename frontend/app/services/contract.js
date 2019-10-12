@@ -157,4 +157,8 @@ export default class ContractService extends Service {
 
     return await this.sendTx(withdraw, [], { from });
   }
+
+  async checkBalance(from) {
+    return await this.appContract.methods.checkBalance().call({ from });
+  }
 }

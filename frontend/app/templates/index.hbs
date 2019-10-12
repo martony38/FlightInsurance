@@ -1,16 +1,16 @@
 <div class="panel">
   {{#if this.contract.ready}}
     {{#link-to "passenger"}}
-      <button class="link">Check Flights Status / Buy Insurance</button>
+      <button class="link">Passenger</button>
     {{/link-to}}
     {{#link-to "airline"}}
-      <button class="link">Restricted Airline Only Area</button>
+      <button class="link">Airline</button>
     {{/link-to}}
     {{#link-to "owner"}}
-      <button class="link">Contract Owner Only</button>
+      <button class="link">Contract Owner</button>
     {{/link-to}}
     {{#link-to "pauser"}}
-      <button class="link">Contract Admins Only</button>
+      <button class="link">Contract Admins</button>
     {{/link-to}}
   {{else}}
     Fetching contract data from blockchain... please wait.
