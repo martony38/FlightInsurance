@@ -233,6 +233,15 @@ contract FlightSuretyApp is Ownable, ReentrancyGuard, AirlineApp {
         flightSuretyData.creditInsuree(flightKey, msg.sender);
     }
 
+    function getStatus(bytes32 flightKey)
+        external
+        view
+        whenNotPaused
+        returns (uint8)
+    {
+        return flightSuretyData.getStatus(flightKey);
+    }
+
     function checkBalance() external view whenNotPaused returns (uint256) {
         uint256 balance = flightSuretyData.checkBalance(msg.sender);
         return balance;

@@ -161,4 +161,12 @@ export default class ContractService extends Service {
   async checkBalance(from) {
     return await this.appContract.methods.checkBalance().call({ from });
   }
+
+  async getStatus(flight) {
+    const key = this.getFlightKey(flight);
+
+    return await this.appContract.methods
+      .getStatus(key)
+      .call({ from: this.owner });
+  }
 }

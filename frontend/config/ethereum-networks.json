@@ -1,18 +1,18 @@
 {
 	"development": {
+		"oraclesNumber": 30,
+		"airlinesNumber": 10,
+		"adminsNumber": 3,
 		"url": "http://localhost:8545",
 		"dataAddress": "0xd1124FbfC171074EeFF3A8fbc56f97b524AEe90E",
-		"appAddress": "0x24A63446945A5817478E1715f31d53821b031298",
-		"oraclesNumber": 20,
-		"airlinesNumber": 5,
-		"adminsNumber": 3
+		"appAddress": "0x24A63446945A5817478E1715f31d53821b031298"
 	},
 	"test": {
+		"oraclesNumber": 30,
+		"airlinesNumber": 10,
+		"adminsNumber": 3,
 		"url": "http://localhost:8545",
 		"dataAddress": "0xd1124FbfC171074EeFF3A8fbc56f97b524AEe90E",
-		"appAddress": "0x24A63446945A5817478E1715f31d53821b031298",
-		"oraclesNumber": 20,
-		"airlinesNumber": 5,
-		"adminsNumber": 3
+		"appAddress": "0x24A63446945A5817478E1715f31d53821b031298"
 	}
 }

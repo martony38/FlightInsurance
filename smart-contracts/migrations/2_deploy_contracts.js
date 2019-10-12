@@ -12,16 +12,16 @@ module.exports = function(deployer) {
             url: "http://localhost:8545",
             dataAddress: FlightSuretyData.address,
             appAddress: FlightSuretyApp.address,
-            oraclesNumber: 20,
-            airlinesNumber: 5,
+            oraclesNumber: 30,
+            airlinesNumber: 10,
             adminsNumber: 3
           },
           test: {
             url: "http://localhost:8545",
             dataAddress: FlightSuretyData.address,
             appAddress: FlightSuretyApp.address,
-            oraclesNumber: 20,
-            airlinesNumber: 5,
+            oraclesNumber: 30,
+            airlinesNumber: 10,
             adminsNumber: 3
           }
         };

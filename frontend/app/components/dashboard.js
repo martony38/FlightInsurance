@@ -81,16 +81,31 @@ export default class DashboardComponent extends Component {
     clearTimeout(this.timeout);
     this.statusFetchFailed = false;
     this.isFetching = false;
-    this.flightStatuses = [
-      {
+    const index = this.flightStatuses.findIndex(
+      ({ flight: savedFlight }) => savedFlight === flight
+    );
+    if (index > -1) {
+      this.flightStatuses[index] = {
         airline,
         flight,
         timestamp: Date(timestamp),
         status,
         isClaimable: status === "20"
-      },
-      ...this.flightStatuses
-    ];
+      };
+      this.flightStatuses = [...this.flightStatuses];
+    } else {
+      this.flightStatuses = [
+        {
+          airline,
+          flight,
+          timestamp: Date(timestamp),
+          status,
+          isClaimable: status === "20"
+        },
+        ...this.flightStatuses
+      ];
+    }
+
     this.notify.success("Flight status updated!");
   }
 
@@ -108,6 +123,21 @@ export default class DashboardComponent extends Component {
     this.notify.info(
       "Waiting for flight status update from oracles... Please wait."
     );
+
+    const status = await contract.getStatus(selectedFlight);
+    if (parseInt(status, 10) > 0) {
+      const {
+        airline: { address },
+        number,
+        timestamp
+      } = selectedFlight;
+
+      this.updateFlightStatus(null, {
+        returnValues: { airline: address, flight: number, timestamp, status }
+      });
+
+      return;
+    }
 
     if (!this.statusFetchFailed) {
       contract.appContract.once(
