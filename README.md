@@ -24,7 +24,7 @@ You will need the following things properly installed on your computer.
 ```bash
 cd smart-contracts
 
-ganache-cli -m "<YOUR_MNEMONIC_HERE>" -a 35 -e 200 --gasLimit 18000000
+ganache-cli -m "<YOUR_MNEMONIC_HERE>" -a 50 --gasLimit 18000000
 ```
 
 2. Compile and deploy contracts

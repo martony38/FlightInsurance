@@ -22,7 +22,7 @@ You will need the following things properly installed on your computer.
 - Launch local network instance:
 
 ```bash
-ganache-cli -m "<YOUR_MNEMONIC_HERE>" -a 35 -e 200 --gasLimit 18000000
+ganache-cli -m "<YOUR_MNEMONIC_HERE>" -a 50 --gasLimit 18000000
 ```
 
 - `truffle test` to run the tests suite
